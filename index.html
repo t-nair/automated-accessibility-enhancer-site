@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Automated Accessibility Enhancer</title>
+<meta name="description" content="An open-source tool that fixes reading order and adds missing alt text in PowerPoint files. Built at the University of Washington.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="styles.css">
+<script>
+  document.documentElement.classList.add("js");
+  try {
+    var t = localStorage.getItem("theme");
+    if (t === "light" || t === "dark") { document.documentElement.dataset.theme = t; }
+  } catch (e) {}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="#top">Accessibility Enhancer</a>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="#updates">Updates</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#limits">Limitations</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false" hidden>
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+      Dark mode
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="intro wrap" id="top" aria-labelledby="top-h">
+    <h1 id="top-h">Automated Accessibility Enhancer</h1>
+    <p class="lede">An open-source tool that fixes common accessibility problems in PowerPoint files. It puts slide
+      titles first in the reading order, adds alt text to images that don't have any, and creates a report of every
+      change.</p>
+    <p class="actions">
+      <a class="button" href="https://github.com/t-nair/automated-accessibility-enhancer">View on GitHub</a>
+    </p>
+  </section>
+
+  <section id="updates" class="wrap" aria-labelledby="updates-h">
+    <h2 id="updates-h">Updates</h2>
+
+    <ol class="feed" id="feed">
+
+      <li class="feed-item is-upcoming">
+        <p class="feed-meta">
+          <span class="tag tag-upcoming">Upcoming</span>
+          <time datetime="2026-09-29">Sep 29 to Oct 2, 2026</time>
+        </p>
+        <h3>Attending EDUCAUSE 2026 in Denver</h3>
+        <p>I'll be at the conference in person as an
+          <a href="https://er.educause.edu/articles/2023/1/pipeline-to-educause-connecting-underrepresented-students-to-careers-in-higher-education-it">EDUCAUSE
+          Pipeline scholar</a>. If you'd like to meet up and talk about accessible course materials,
+          <a href="mailto:tanyan07@uw.edu?subject=EDUCAUSE%202026">send me an email</a>.</p>
+      </li>
+
+      <li class="feed-item">
+        <p class="feed-meta">
+          <span class="tag">Release</span>
+          <time datetime="2026-09-03">Sep 3, 2026</time>
+        </p>
+        <h3>Alt text from Claude on Amazon Bedrock</h3>
+        <p>Image descriptions now come from a hosted model instead of one running locally, so a GPU is no longer
+          needed. Without AWS credentials, the reading order fixes still run.</p>
+      </li>
+
+      <li class="feed-item">
+        <p class="feed-meta">
+          <span class="tag">Infrastructure</span>
+          <time datetime="2026-09-03">Sep 3, 2026</time>
+        </p>
+        <h3>AWS deployment with Terraform</h3>
+        <p>The pipeline can run on AWS Lambda. Upload a deck to S3 and the fixed file and report are written back to
+          S3. The web app still runs locally for now.</p>
+      </li>
+
+      <li class="feed-item">
+        <p class="feed-meta">
+          <span class="tag">Fixes</span>
+          <time datetime="2026-09-03">Sep 3, 2026</time>
+        </p>
+        <h3>Reading order and alt text bug fixes</h3>
+        <p>Fixed four bugs, including one where alt text written by a person could be overwritten if it matched the
+          shape name. The test suite is now at 123 tests.</p>
+      </li>
+
+      <li class="feed-item">
+        <p class="feed-meta">
+          <span class="tag">Release</span>
+          <time datetime="2026-08-21">Aug 21, 2026</time>
+        </p>
+        <h3>Web version</h3>
+        <p>Upload files in the browser, track progress, read the report for each file, and download the fixed deck.
+          The command-line script still works for folders.</p>
+      </li>
+
+      <li class="feed-item">
+        <p class="feed-meta">
+          <span class="tag">Talk</span>
+          <time datetime="2025-11-13">Nov 13, 2025</time>
+        </p>
+        <h3>EDUCAUSE 2025 Online poster session</h3>
+        <p>Presented <a href="https://events.educause.edu/annual-conference/2025-online/agenda/building-institutional-community-of-practice-around-it-accessibility">Building
+          Institutional Community of Practice around IT Accessibility</a> with Lalitha Subramanian.</p>
+      </li>
+
+    </ol>
+
+    <p class="feed-more">
+      <button type="button" class="button-secondary" id="feed-toggle" aria-controls="feed" aria-expanded="false" hidden>View more updates</button>
+    </p>
+  </section>
+
+  <section id="how" class="wrap" aria-labelledby="how-h">
+    <h2 id="how-h">How It Works</h2>
+    <p class="section-intro">The tool is written in Python and uses <span class="code">python-pptx</span> to edit
+      files directly. Files can come in three ways, and all of them go through the same pipeline.</p>
+
+    <div class="pipeline">
+
+      <div class="pipe-col">
+        <h3 class="pipe-label">Input</h3>
+        <ul class="nodes">
+          <li>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5M4 15v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"/></svg>
+            <span><strong>Web upload</strong><small>Flask site</small></span>
+          </li>
+          <li>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5H9l2 2.5h8.5A1.5 1.5 0 0 1 21 9v9.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5z"/></svg>
+            <span><strong>Folder</strong><small>z_reorder.py</small></span>
+          </li>
+          <li>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 19h10a4 4 0 0 0 .6-7.95A6 6 0 0 0 6 10.2 4.5 4.5 0 0 0 7 19z"/></svg>
+            <span><strong>S3 bucket</strong><small>AWS Lambda</small></span>
+          </li>
+        </ul>
+      </div>
+
+      <svg class="pipe-arrow" viewBox="0 0 32 24" aria-hidden="true" focusable="false"><path d="M2 12h26M21 5l7 7-7 7"/></svg>
+
+      <div class="pipe-col pipe-main">
+        <h3 class="pipe-label">Pipeline</h3>
+        <ol class="steps">
+          <li>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 8h14l-3.5-3.5M20 16H6l3.5 3.5"/></svg>
+            <span><strong>Convert</strong><small>Older .ppt files are converted to .pptx with LibreOffice</small></span>
+          </li>
+          <li>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10 6h10M10 12h10M10 18h10M4.5 4.5 6 4v4M4 12.5a1 1 0 1 1 2 .3L4 15h2M4 17h2l-1 1.2a1 1 0 1 1-1 .8"/></svg>
+            <span><strong>Fix reading order</strong><small>Shapes named "Title" are moved to the front</small></span>
+          </li>
+          <li>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4.5" width="18" height="15" rx="1.5"/><circle cx="9" cy="10" r="1.75"/><path d="m3.5 17.5 5-5 3.5 3.5 2.5-2.5 6 5"/></svg>
+            <span><strong>Add alt text</strong><small>Images without alt text are described by Claude on Amazon Bedrock</small></span>
+          </li>
+        </ol>
+      </div>
+
+      <svg class="pipe-arrow" viewBox="0 0 32 24" aria-hidden="true" focusable="false"><path d="M2 12h26M21 5l7 7-7 7"/></svg>
+
+      <div class="pipe-col">
+        <h3 class="pipe-label">Output</h3>
+        <ul class="nodes">
+          <li>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 3h8l4 4v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM14 3v4h4M8.5 14l2 2 4-4"/></svg>
+            <span><strong>Fixed .pptx</strong><small>Ready to download</small></span>
+          </li>
+          <li>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+            <span><strong>Report</strong><small>Every change, slide by slide</small></span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <figure class="example">
+      <figcaption>
+        <h3>Example: one slide, before and after</h3>
+        <p>Screen readers read shapes in the order they were added to the slide, not top to bottom. The numbers show
+          the order a screen reader would read each shape. Each slide below is marked up as a list in that same
+          order.</p>
+      </figcaption>
+
+      <div class="compare">
+        <div class="compare-side">
+          <h4>Before</h4>
+          <ol class="slide" aria-label="Before, in screen reader order">
+            <li class="shape shape-pic">
+              <svg class="incline" viewBox="0 0 120 70" aria-hidden="true" focusable="false"><path d="M5 65h110V15z"/><rect x="-9" y="-14" width="18" height="14" transform="translate(60 40) rotate(-24.4)"/><path class="force" d="M57 34v24M54 53l3 5 3-5M57 34 48.8 15.4M53.6 18.7l-4.8-3.3.6 5.8M57 34l18.2-8.3M71.9 30.5l3.3-4.8-5.8-.7"/></svg>
+              <span class="shape-text">Picture <span class="alt alt-missing">No alt text</span></span>
+            </li>
+            <li class="shape shape-body"><span class="shape-text">Body text: ΣF = ma</span></li>
+            <li class="shape shape-title"><span class="shape-text">Title: Forces on an Incline</span></li>
+          </ol>
+        </div>
+
+        <svg class="compare-arrow" viewBox="0 0 32 24" aria-hidden="true" focusable="false"><path d="M2 12h26M21 5l7 7-7 7"/></svg>
+
+        <div class="compare-side">
+          <h4>After</h4>
+          <ol class="slide" aria-label="After, in screen reader order">
+            <li class="shape shape-title"><span class="shape-text">Title: Forces on an Incline</span></li>
+            <li class="shape shape-pic">
+              <svg class="incline" viewBox="0 0 120 70" aria-hidden="true" focusable="false"><path d="M5 65h110V15z"/><rect x="-9" y="-14" width="18" height="14" transform="translate(60 40) rotate(-24.4)"/><path class="force" d="M57 34v24M54 53l3 5 3-5M57 34 48.8 15.4M53.6 18.7l-4.8-3.3.6 5.8M57 34l18.2-8.3M71.9 30.5l3.3-4.8-5.8-.7"/></svg>
+              <span class="shape-text">Picture <span class="alt alt-added">Alt text added: "Block on an incline with arrows for gravity, the normal force, and friction."</span></span>
+            </li>
+            <li class="shape shape-body"><span class="shape-text">Body text: ΣF = ma</span></li>
+          </ol>
+        </div>
+      </div>
+    </figure>
+  </section>
+
+  <section id="limits" class="wrap" aria-labelledby="limits-h">
+    <h2 id="limits-h">Current Limitations</h2>
+    <ul class="plain">
+      <li><strong>Title detection is based on shape names.</strong> If a title's shape isn't named "Title", it won't be
+        moved. Detecting titles by position and font size is planned.</li>
+      <li><strong>Generated alt text needs to be reviewed.</strong> Models can get names, dates, and text inside
+        diagrams wrong. The report lists every description so they can be checked.</li>
+      <li><strong>Technical diagrams are hard to describe.</strong> Earlier tests with free tools like alternat did
+        not produce usable alt text for engineering figures.</li>
+      <li><strong>Alt text has a cost.</strong> Each image without alt text is one Bedrock request.</li>
+      <li><strong>There are no user accounts.</strong> Files are kept separate with a signed browser cookie, which is
+        not real security.</li>
+      <li><strong>Files are processed one at a time</strong>, and progress is stored in memory. If the server restarts
+        during a run, that file stays marked as processing.</li>
+    </ul>
+  </section>
+
+  <section id="next" class="wrap" aria-labelledby="next-h">
+    <h2 id="next-h">What's Next</h2>
+    <ul class="plain">
+      <li>Title detection based on position and formatting</li>
+      <li>PDF support</li>
+      <li>University sign-in</li>
+      <li>Configurable rules for headings and slide structure</li>
+      <li>Moving the web app to AWS</li>
+    </ul>
+    <p>Feedback on the design or code is welcome.</p>
+  </section>
+
+  <section id="talks" class="wrap" aria-labelledby="talks-h">
+    <h2 id="talks-h">Talks and Links</h2>
+    <ul class="links">
+      <li>
+        <a href="https://events.educause.edu/annual-conference/2025-online/agenda/building-institutional-community-of-practice-around-it-accessibility">Building Institutional Community of Practice around IT Accessibility</a>
+        <span class="meta">EDUCAUSE 2025 Online poster session, Nov 13, 2025, with Lalitha Subramanian</span>
+      </li>
+      <li>
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer">Project repository</a>
+        <span class="meta">Source code, setup instructions, and AWS deployment files</span>
+      </li>
+      <li>
+        <a href="https://er.educause.edu/articles/2023/1/pipeline-to-educause-connecting-underrepresented-students-to-careers-in-higher-education-it">Pipeline to EDUCAUSE</a>
+        <span class="meta">About the EDUCAUSE Pipeline scholarship program</span>
+      </li>
+    </ul>
+  </section>
+
+  <section id="contact" class="wrap" aria-labelledby="contact-h">
+    <h2 id="contact-h">Contact</h2>
+    <p>Tanya Nair, Advancing Accessibility for Engineering Education intern at the University of Washington</p>
+    <ul class="links links-inline">
+      <li><a href="mailto:tanyan07@uw.edu">tanyan07@uw.edu</a></li>
+      <li><a href="https://www.linkedin.com/in/tanya-nair-617473287/">LinkedIn</a></li>
+      <li><a href="https://github.com/t-nair">GitHub</a></li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Developed as part of the University of Washington Advancing Accessibility for Engineering Education initiative,
+      with guidance from Prof. Anant and Dr. Lalitha Subramanian.</p>
+  </div>
+</footer>
+
+<script src="script.js" defer></script>
+</body>
+</html>
