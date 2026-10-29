@@ -37,7 +37,7 @@ To add one, copy an existing `<li class="feed-item">`, put it at the top of the 
 and change:
 
 - the `<time datetime="YYYY-MM-DD">` attribute and its text
-- the `<span class="tag">` label (Release, Fixes, Infrastructure, Talk, Upcoming)
+- the `<span class="tag">` label (Release, Fixes, Infrastructure, Talk, Upcoming, On a branch)
 - the heading and paragraph
 
 For an event that hasn't happened yet, use `class="feed-item is-upcoming"` and
