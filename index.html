@@ -27,6 +27,7 @@
         <li><a href="#updates">Updates</a></li>
         <li><a href="#how">How It Works</a></li>
         <li><a href="#limits">Limitations</a></li>
+        <li><a href="progress.html">Progress</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
@@ -227,8 +228,9 @@
   <section id="limits" class="wrap" aria-labelledby="limits-h">
     <h2 id="limits-h">Current Limitations</h2>
     <ul class="plain">
-      <li><strong>Title detection is based on shape names.</strong> If a title's shape isn't named "Title", it won't be
-        moved. Detecting titles by position and font size is planned.</li>
+      <li><strong>Title detection can miss unusual layouts.</strong> When a slide has no real title placeholder, a
+        small trained model guesses the title from size, position and wording. A title that is an image is not
+        found.</li>
       <li><strong>Generated alt text needs to be reviewed.</strong> Models can get names, dates, and text inside
         diagrams wrong. The report lists every description so they can be checked.</li>
       <li><strong>Technical diagrams are hard to describe.</strong> Earlier tests with free tools like alternat did
@@ -244,13 +246,12 @@
   <section id="next" class="wrap" aria-labelledby="next-h">
     <h2 id="next-h">What's Next</h2>
     <ul class="plain">
-      <li>Title detection based on position and formatting</li>
-      <li>PDF support</li>
       <li>University sign-in</li>
       <li>Configurable rules for headings and slide structure</li>
       <li>Moving the web app to AWS</li>
     </ul>
-    <p>Feedback on the design or code is welcome.</p>
+    <p>See <a href="progress.html">Project Progress</a> for milestones and open decisions. Feedback on the design or
+      code is welcome.</p>
   </section>
 
   <section id="talks" class="wrap" aria-labelledby="talks-h">

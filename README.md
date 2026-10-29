@@ -9,9 +9,10 @@ Engineering Education initiative.
 No build step and no dependencies:
 
 ```
-index.html   the page
-styles.css   light and dark themes
-script.js    dark mode toggle and the "View more updates" button
+index.html     the main page
+progress.html  milestones, recent work, open decisions and early results
+styles.css     light and dark themes
+script.js      dark mode toggle and the "View more updates" button
 ```
 
 ## Running it locally
@@ -41,6 +42,18 @@ and change:
 
 For an event that hasn't happened yet, use `class="feed-item is-upcoming"` and
 `class="tag tag-upcoming"`. Once it's over, remove both.
+
+## Updating the progress page
+
+`progress.html` summarizes the
+[milestones on GitHub](https://github.com/t-nair/automated-accessibility-enhancer/milestones),
+which stay the source of truth. When milestones move, update the "Done" column (the text
+and the `--done` percentage on the bar), the "Last updated" date, and the shipped and
+decision lists. Get current counts with:
+
+```bash
+gh api "repos/t-nair/automated-accessibility-enhancer/milestones?state=all&sort=due_on" --jq '.[] | "\(.title): \(.closed_issues) of \(.closed_issues + .open_issues)"'
+```
 
 ## Accessibility checklist for changes
 

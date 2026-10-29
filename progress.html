@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Progress · Automated Accessibility Enhancer</title>
+<meta name="description" content="Where the Automated Accessibility Enhancer stands: milestones, recent work, open decisions and early results.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="styles.css">
+<script>
+  document.documentElement.classList.add("js");
+  try {
+    var t = localStorage.getItem("theme");
+    if (t === "light" || t === "dark") { document.documentElement.dataset.theme = t; }
+  } catch (e) {}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="index.html">Accessibility Enhancer</a>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="index.html#updates">Updates</a></li>
+        <li><a href="index.html#how">How It Works</a></li>
+        <li><a href="progress.html" aria-current="page">Progress</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false" hidden>
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+      Dark mode
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="intro wrap" aria-labelledby="top-h">
+    <h1 id="top-h">Project Progress</h1>
+    <p class="lede">Where the project stands, what shipped recently, and what is still being decided. The source of
+      truth is the <a href="https://github.com/t-nair/automated-accessibility-enhancer/milestones">milestones on
+      GitHub</a>. This page is a summary of them.</p>
+    <p class="feed-meta">Last updated <time datetime="2026-10-29">Oct 29, 2026</time></p>
+  </section>
+
+  <section id="glance" class="wrap" aria-labelledby="glance-h">
+    <h2 id="glance-h">At a Glance</h2>
+    <ul class="plain">
+      <li><strong>PowerPoint is working end to end.</strong> Titles go first in the reading order, missing alt text is
+        written, missing language is detected, and small text is reported. Both the website and the folder script
+        work.</li>
+      <li><strong>PDFs are now accepted.</strong> They are routed page by page and rebuilt as tagged PDFs. Scanned
+        pages use OCR and always go to a person for review.</li>
+      <li><strong>Not deployed yet, and there is no login.</strong> Visitors are kept apart only by a signed browser
+        cookie. University sign-in is planned.</li>
+      <li><strong>The alt-text model is still undecided.</strong> The main branch runs a local model (about 4.4 GB). A
+        branch that switches to Claude on Amazon Bedrock is waiting for a decision.</li>
+    </ul>
+  </section>
+
+  <section id="milestones" class="wrap" aria-labelledby="milestones-h">
+    <h2 id="milestones-h">Milestones</h2>
+    <p class="section-intro">Issues closed out of the total in each milestone, ordered by target date.</p>
+
+    <div class="table-wrap" role="region" aria-labelledby="milestones-h" tabindex="0">
+      <table class="progress-table">
+        <thead>
+          <tr><th scope="col">Milestone</th><th scope="col">Done</th><th scope="col">Target</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/1">Faculty web intake</a></th>
+            <td><span class="bar" style="--done: 100%" aria-hidden="true"></span>1 of 1 <span class="tag tag-done">Complete</span></td>
+            <td><time datetime="2026-10-23">Oct 23</time></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/8">Slides: core checks</a></th>
+            <td><span class="bar" style="--done: 56%" aria-hidden="true"></span>5 of 9</td>
+            <td><time datetime="2026-10-27">Oct 27</time></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/10">Reports and coverage docs</a></th>
+            <td><span class="bar" style="--done: 25%" aria-hidden="true"></span>1 of 4</td>
+            <td><time datetime="2026-10-28">Oct 28</time></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/2">Documentation and accessibility audit</a></th>
+            <td><span class="bar" style="--done: 0%" aria-hidden="true"></span>0 of 2</td>
+            <td><time datetime="2026-10-29">Oct 29</time></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/9">Slides: alt text and media</a></th>
+            <td><span class="bar" style="--done: 0%" aria-hidden="true"></span>0 of 9</td>
+            <td><time datetime="2026-10-30">Oct 30</time></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/3">Accessibility conformance</a></th>
+            <td><span class="bar" style="--done: 0%" aria-hidden="true"></span>0 of 8</td>
+            <td><time datetime="2026-11-02">Nov 2</time></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/4">Observability and fault tolerance</a></th>
+            <td><span class="bar" style="--done: 0%" aria-hidden="true"></span>0 of 1</td>
+            <td><time datetime="2026-11-03">Nov 3</time></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/6">Deployment and access control</a></th>
+            <td><span class="bar" style="--done: 0%" aria-hidden="true"></span>0 of 8</td>
+            <td><time datetime="2026-11-04">Nov 4</time></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/5">Orchestration and notifications</a></th>
+            <td><span class="bar" style="--done: 0%" aria-hidden="true"></span>0 of 2</td>
+            <td><time datetime="2026-11-05">Nov 5</time></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/7">Submission dashboard and reporting</a></th>
+            <td><span class="bar" style="--done: 0%" aria-hidden="true"></span>0 of 2</td>
+            <td><time datetime="2026-11-05">Nov 5</time></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/11">Beyond slides: web pages and other formats</a></th>
+            <td><span class="bar" style="--done: 13%" aria-hidden="true"></span>2 of 16</td>
+            <td><time datetime="2026-11-06">Nov 6</time></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/13">Script and code health</a></th>
+            <td><span class="bar" style="--done: 0%" aria-hidden="true"></span>0 of 9</td>
+            <td>No date</td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/12">Future fixes</a></th>
+            <td><span class="bar" style="--done: 0%" aria-hidden="true"></span>0 of 1</td>
+            <td>No date</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="shipped" class="wrap" aria-labelledby="shipped-h">
+    <h2 id="shipped-h">Recently Shipped</h2>
+    <ul class="plain">
+      <li><strong>PDF remediation</strong> (<time datetime="2026-10-26">Oct 26</time>). Uploaded PDFs go through a
+        page-by-page pipeline and come back as tagged PDFs, with OCR for scanned pages and human review for anything
+        uncertain. <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/84">#84</a>,
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/92">#92</a></li>
+      <li><strong>Presentation language</strong> (<time datetime="2026-10-11">Oct 11</time>). Missing, invalid or
+        mixed language settings are reported, and can be set across the whole deck.
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/24">#24</a></li>
+      <li><strong>Minimum font size</strong> (<time datetime="2026-10-11">Oct 11</time>). Text below 9 pt is
+        reported by slide, including sizes inherited from layouts and masters.
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/26">#26</a></li>
+      <li><strong>Title detection by layout</strong> (<time datetime="2026-10-10">Oct 10</time>). When a slide has no
+        real title placeholder, a small trained model picks the likely title from size, position and wording.
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/7">#7</a>,
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/23">#23</a></li>
+      <li><strong>Documentation</strong> (<time datetime="2026-10-10">Oct 10</time>). A WCAG 2.1 coverage table, notes
+        on exporting fixed decks to PDF, and a decision on Prezi (export to PowerPoint first).
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/50">#50</a>,
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/37">#37</a></li>
+    </ul>
+  </section>
+
+  <section id="decisions" class="wrap" aria-labelledby="decisions-h">
+    <h2 id="decisions-h">Open Decisions</h2>
+    <ul class="plain">
+      <li><strong>Local model or hosted API for alt text.</strong> A local model needs a GPU machine and about 4.4 GB
+        of files. A hosted API runs on a lighter server but costs money per image.
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/97">#97</a></li>
+      <li><strong>Whether n8n should orchestrate the pipeline</strong>, which affects how notifications and storage
+        are built. <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/80">#80</a></li>
+      <li><strong>How to check web pages for problems that only show once rendered</strong>, such as CSS contrast and
+        keyboard access. <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/47">#47</a></li>
+    </ul>
+  </section>
+
+  <section id="results" class="wrap" aria-labelledby="results-h">
+    <h2 id="results-h">Early Results</h2>
+    <p class="section-intro">Faculty PowerPoint files that Anthology Ally flagged for missing headings were run through
+      the tool and put back into their Canvas courses. A full comparison with other checkers is tracked in
+      <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/98">#98</a>.</p>
+
+    <div class="table-wrap" role="region" aria-labelledby="results-h" tabindex="0">
+      <table class="progress-table">
+        <thead>
+          <tr><th scope="col">File</th><th scope="col">Ally score</th><th scope="col">Flagged issues</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">A Beginner's Guide to SEO</th><td>51% to 99%</td><td>48 to 3</td></tr>
+          <tr><th scope="row">Ultimate Guide in Slides (Dec 2021)</th><td>55% to 68%</td><td>69 to 4</td></tr>
+          <tr><th scope="row">Mini Media Plan Presentation Template</th><td>48% to 68%</td><td>2 to 1</td></tr>
+          <tr><th scope="row">Content Marketing</th><td>49% to 61%</td><td>55 to 20</td></tr>
+          <tr><th scope="row">Ultimate Guide in Slides (Jun 2020)</th><td>28% to 48%</td><td>76 to not recorded</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Every score went up. The issues left on the SEO lesson are all color contrast, which the tool reports but does
+      not fix yet.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Developed as part of the University of Washington Advancing Accessibility for Engineering Education initiative,
+      with guidance from Prof. Anant and Dr. Lalitha Subramanian.</p>
+  </div>
+</footer>
+
+<script src="script.js" defer></script>
+</body>
+</html>
