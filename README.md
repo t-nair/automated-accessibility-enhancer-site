@@ -28,6 +28,10 @@ python -m http.server 8000
 The site is static, so GitHub Pages can serve it as-is: Settings > Pages > Deploy
 from a branch > `main` / root.
 
+"Try the tool" points at `app.accessibilityenhancer.com`, a CNAME to the Flask app on
+Render. It is a separate host on purpose: the Flask app emits root-absolute URLs, so
+serving it under a path on this domain breaks its stylesheet, nav and upload form.
+
 ## Adding an update
 
 Updates are plain HTML in the `<ol id="feed">` list in `index.html`, newest first.
