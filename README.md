@@ -28,9 +28,11 @@ python -m http.server 8000
 The site is static, so GitHub Pages can serve it as-is: Settings > Pages > Deploy
 from a branch > `main` / root.
 
-"Try the tool" points at `app.accessibilityenhancer.com`, a CNAME to the Flask app on
-Render. It is a separate host on purpose: the Flask app emits root-absolute URLs, so
-serving it under a path on this domain breaks its stylesheet, nav and upload form.
+`functions/` holds one Cloudflare Pages Function that reverse-proxies `/app` to the Flask
+app on Render, so "Try the tool" stays on this domain. It sends `X-Forwarded-Prefix: /app`,
+which the Flask app reads through `ProxyFix` so `url_for()` builds `/app/...` links. Both
+halves are needed: without the header the proxied page loads unstyled with a dead nav and
+upload form. Swap `ORIGIN` if the app moves off Render.
 
 ## Adding an update
 
