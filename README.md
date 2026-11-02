@@ -28,6 +28,12 @@ python -m http.server 8000
 The site is static, so GitHub Pages can serve it as-is: Settings > Pages > Deploy
 from a branch > `main` / root.
 
+`functions/` holds one Cloudflare Pages Function that reverse-proxies `/app` to the Flask
+app on Render, so "Try the tool" stays on this domain. It sends `X-Forwarded-Prefix: /app`,
+which the Flask app reads through `ProxyFix` so `url_for()` builds `/app/...` links. Both
+halves are needed: without the header the proxied page loads unstyled with a dead nav and
+upload form. Swap `ORIGIN` if the app moves off Render.
+
 ## Adding an update
 
 Updates are plain HTML in the `<ol id="feed">` list in `index.html`, newest first.
