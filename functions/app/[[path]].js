@@ -1,5 +1,6 @@
-// Reverse-proxies /app and /app/* to the Flask app. Swap ORIGIN when it moves off Render.
-const ORIGIN = "https://automated-accessibility-enhancer.onrender.com";
+// Reverse-proxies /app and /app/* to the Flask app, which runs on AWS (ECS Express Mode).
+// This is the address `terraform output website_url` gives in the main repo's infra/envs/dev.
+const ORIGIN = "https://aa-21da4c097a32416d936bad194c042958.ecs.us-east-1.on.aws";
 
 export async function onRequest({ request }) {
   const url = new URL(request.url);
@@ -10,6 +11,9 @@ export async function onRequest({ request }) {
   // root-absolute ones this domain would answer with the landing page. The app reads it
   // through ProxyFix(x_prefix=1); without this header it serves itself at the root.
   forwarded.set("X-Forwarded-Prefix", "/app");
+  // The AWS load balancer picks the service by Host and answers 404 to any other name,
+  // so the visitor's Host (this domain) must not be passed on. fetch() fills in ORIGIN's.
+  forwarded.delete("Host");
 
   const upstream = await fetch(ORIGIN + path + url.search, {
     method: request.method,
