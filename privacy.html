@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy · Automated Accessibility Enhancer</title>
+<meta name="description" content="What the Automated Accessibility Enhancer collects, who processes it, how long files are kept, and how to delete them.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="styles.css">
+<script>
+  document.documentElement.classList.add("js");
+  try {
+    var t = localStorage.getItem("theme");
+    if (t === "light" || t === "dark") { document.documentElement.dataset.theme = t; }
+  } catch (e) {}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="index.html">Accessibility Enhancer</a>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="index.html#updates">Updates</a></li>
+        <li><a href="index.html#how">How It Works</a></li>
+        <li><a href="progress.html">Progress</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false" hidden>
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+      Dark mode
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="intro wrap" aria-labelledby="top-h">
+    <h1 id="top-h">Privacy Policy</h1>
+    <p class="lede">We collect as little as we can, your lecture files are deleted on a timer whether you ask or not,
+      and nothing here is sold, shared for advertising or used to train anybody's model.</p>
+    <p class="feed-meta">Last updated <time datetime="2026-11-19">Nov 19, 2026</time></p>
+  </section>
+
+  <section id="scope" class="wrap" aria-labelledby="scope-h">
+    <h2 id="scope-h">What this covers</h2>
+    <p>This policy covers this website and the tool it links to at
+      <a href="/app">accessibilityenhancer.com/app</a>, which fixes reading order and writes missing alt text in
+      PowerPoint files.</p>
+    <p>The project was built as part of the University of Washington Advancing Accessibility for Engineering Education
+      initiative, but <strong>it is not an official University of Washington service</strong>. It is a student-led
+      open-source project, run on a project-owned AWS account, and UW does not operate it or hold the files you send
+      it.</p>
+    <p>The code is public, so anything written here can be checked against it:
+      <a href="https://github.com/t-nair/automated-accessibility-enhancer">the tool</a> and
+      <a href="https://github.com/t-nair/automated-accessibility-enhancer-site">this site</a>.</p>
+  </section>
+
+  <section id="collect" class="wrap" aria-labelledby="collect-h">
+    <h2 id="collect-h">What we collect and why</h2>
+    <p class="section-intro">The guiding rule is to collect only what the tool needs to do the job you asked it to
+      do.</p>
+
+    <h3>The files you upload</h3>
+    <p>When you send a presentation, we store the file you uploaded so the pipeline can work on it. Nothing else is
+      done with it: it is not read by a person, not used as training data, and not shared with anyone outside the
+      processors listed below.</p>
+    <p><strong>Please don't upload files containing student records, grades or anything else protected by FERPA, or any
+      other confidential or personal information.</strong> The tool is for course material. Only upload material you
+      have the right to share.</p>
+
+    <h3>What the tool writes back</h3>
+    <p>The fixed copy of your file and the report of every change made to it are stored so you can download them. The
+      report includes the alt text written for each image.</p>
+
+    <h3>Details about each submission</h3>
+    <p>Alongside the files we store a short record of the submission: a random submission id, the original file name,
+      the language you chose for the deck, when it was submitted, its status, how many times it was retried, and the
+      text of any error. This is what draws your status page.</p>
+
+    <h3>A session cookie</h3>
+    <p>The site sets one cookie, which is how your list of files is kept separate from everyone else's. It holds a
+      random id generated for your browser and a token that protects forms against cross-site request forgery. It is
+      signed so it cannot be edited, and it expires after 30 days. It is not an advertising or tracking cookie, and
+      it is not shared with anyone.</p>
+    <p>Because that id lives only in the cookie, clearing your cookies loses your list of files. The files themselves
+      stay until their timer runs out.</p>
+
+    <h3>Server logs</h3>
+    <p>The website and the pipeline write ordinary operational logs: the time, what was requested, submission ids,
+      uploaded file names and sizes, and any errors. They are what makes it possible to work out why a deck failed.
+      They do not contain the contents of your slides.</p>
+
+    <h3>Your account, once sign-in is switched on</h3>
+    <p>Signing in is not live yet; today the cookie above is the only identity the site has. When it is switched on,
+      accounts will be held in Amazon Cognito, which will store your email address, whether it has been verified, and
+      your name if you choose to sign in with Google. Cognito handles the password itself, so we never see it.
+      Verification and password-reset email is sent through Amazon SES. Accounts are keyed by the identifier Cognito
+      issues, never by email address.</p>
+  </section>
+
+  <section id="processors" class="wrap" aria-labelledby="processors-h">
+    <h2 id="processors-h">Who else processes it</h2>
+    <p class="section-intro">Four companies touch your files or your details, each for one job.</p>
+    <ul class="plain">
+      <li><strong>Amazon Web Services</strong>, in the us-east-1 region, runs all of it: S3 holds the uploads and the
+        results, DynamoDB holds the submission records, Lambda runs the pipeline, ECS runs the website, and Cognito
+        and SES will handle accounts and their email. Files are encrypted at rest and only reachable over HTTPS.</li>
+      <li><strong>Claude on Amazon Bedrock</strong> writes the alt text. Each picture that has no alt text is sent to
+        the model on its own, scaled down, together with up to 400 characters of the text on the same slide so the
+        description comes out right. Nothing else from the deck is sent, and no account details are sent. AWS states
+        that content processed by Bedrock is encrypted and stored at rest in the region where Bedrock is used, that
+        inputs and outputs are not shared with the model provider, and that they are not used to train AWS or
+        third-party models; AWS may retain content for safety and abuse prevention. The request uses a US
+        cross-region inference profile, so it may be processed in any US region rather than only us-east-1.</li>
+      <li><strong>Cloudflare</strong> serves this site and proxies the tool at <code class="code">/app</code>, so
+        every request and every upload passes through it on the way to AWS.</li>
+      <li><strong>Google</strong>, only if you choose to sign in with Google once sign-in is switched on, and only for
+        your email address and name.</li>
+    </ul>
+  </section>
+
+  <section id="retention" class="wrap" aria-labelledby="retention-h">
+    <h2 id="retention-h">How long it's kept</h2>
+    <p class="section-intro">Deletion is automatic. Nobody has to remember to do it, and you do not have to ask.</p>
+
+    <div class="table-wrap" role="region" aria-labelledby="retention-h" tabindex="0">
+      <table class="progress-table">
+        <thead>
+          <tr><th scope="col">What</th><th scope="col">How long</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">The file you uploaded</th><td>7 days</td></tr>
+          <tr><th scope="row">The fixed file and its report</th><td>30 days</td></tr>
+          <tr><th scope="row">The submission record</th><td>30 days</td></tr>
+          <tr><th scope="row">Server logs</th><td>30 days</td></tr>
+          <tr><th scope="row">The session cookie</th><td>30 days</td></tr>
+          <tr><th scope="row">Your account, once accounts exist</th><td>Until you delete it</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Two things outlive those numbers slightly, both so that a mistake can be undone:</p>
+    <ul class="plain">
+      <li><strong>Deleted files can be restored for 3 more days.</strong> The buckets keep previous versions, so a
+        file that is deleted or overwritten is recoverable for three days afterwards and is then removed for good.
+        The longest anything can survive is its number above plus those three days.</li>
+      <li><strong>The submission table keeps continuous backups for up to 35 days.</strong> That covers the records
+        described above, not the files themselves.</li>
+    </ul>
+  </section>
+
+  <section id="never" class="wrap" aria-labelledby="never-h">
+    <h2 id="never-h">What we don't do</h2>
+    <ul class="plain">
+      <li><strong>No selling or sharing.</strong> Your files and your details are never sold, rented or handed to
+        anyone for their own purposes.</li>
+      <li><strong>No advertising, and no analytics trackers.</strong> This site loads no third-party scripts,
+        no fonts from anyone else's server, no pixels and no analytics of any kind. The one cookie it sets is
+        described above.</li>
+      <li><strong>No training on your material.</strong> Your slides are not used to train or fine-tune any model,
+        ours or anybody else's.</li>
+      <li><strong>No reading your decks.</strong> Nobody on the project opens the files you upload. The only
+        exception would be a specific problem you ask us to look into, with your permission.</li>
+    </ul>
+  </section>
+
+  <section id="deleting" class="wrap" aria-labelledby="deleting-h">
+    <h2 id="deleting-h">Deleting things sooner</h2>
+    <ul class="plain">
+      <li><strong>A submission.</strong> Open it from your status page and use Delete. That removes the upload, the
+        fixed file, the report and the record, ahead of the timer. A file still being processed has to finish
+        first.</li>
+      <li><strong>Everything in your browser.</strong> Clearing cookies detaches you from your list. The files are
+        then unreachable and expire on their own schedule.</li>
+      <li><strong>Your account, once accounts exist.</strong> Ask at the address below and it will be deleted,
+        along with the submissions attached to it.</li>
+    </ul>
+    <p>You can also ask what is held about you, ask for it to be corrected, or ask for it to be deleted, by writing to
+      the address below.</p>
+  </section>
+
+  <section id="security" class="wrap" aria-labelledby="security-h">
+    <h2 id="security-h">How it's kept secure</h2>
+    <ul class="plain">
+      <li>Everything travels over HTTPS, and the storage buckets refuse plain HTTP outright.</li>
+      <li>Files are encrypted at rest in S3, and the submission table is encrypted too.</li>
+      <li>The buckets are closed to the public. Downloads use links that are signed for your submission and expire
+        after five minutes.</li>
+      <li>A submission can only be opened, downloaded or deleted by the browser or account that sent it.</li>
+      <li>The deploy pipeline is explicitly denied permission to read the uploaded or processed files.</li>
+    </ul>
+    <p>No system is perfect, and this one is a small open-source project rather than a hardened commercial service.
+      That is part of why the files are deleted quickly: the less there is, the less there is to lose.</p>
+  </section>
+
+  <section id="where" class="wrap" aria-labelledby="where-h">
+    <h2 id="where-h">Where it's stored</h2>
+    <p>In the United States. If you are somewhere else and you use the tool, you are sending your files to the US to
+      be processed there.</p>
+  </section>
+
+  <section id="changes" class="wrap" aria-labelledby="changes-h">
+    <h2 id="changes-h">Changes to this policy</h2>
+    <p>The date at the top changes whenever this page does, and the edit itself is in the
+      <a href="https://github.com/t-nair/automated-accessibility-enhancer-site/commits/main/privacy.html">commit
+      history of this file</a>, so you can see exactly what changed and when. Anything significant will also be noted
+      in the <a href="index.html#updates">updates</a> on the front page.</p>
+  </section>
+
+  <section id="questions" class="wrap" aria-labelledby="questions-h">
+    <h2 id="questions-h">Questions</h2>
+    <p>Write to Tanya Nair at <a href="mailto:tanyan07@uw.edu">tanyan07@uw.edu</a> with anything at all about this
+      page: a question, a correction, a request to delete something, or a problem you have found.</p>
+    <p class="feed-meta">Adapted from the
+      <a href="https://github.com/basecamp/policies">Basecamp open-source policies</a> /
+      <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. This policy describes what the software
+      actually does; it is not legal advice.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Developed as part of the University of Washington Advancing Accessibility for Engineering Education initiative,
+      with guidance from Prof. Anant and Dr. Lalitha Subramanian.</p>
+    <p><a href="privacy.html" aria-current="page">Privacy Policy</a></p>
+  </div>
+</footer>
+
+<script src="script.js" defer></script>
+</body>
+</html>
