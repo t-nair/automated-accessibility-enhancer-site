@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terms of Service · Automated Accessibility Enhancer</title>
+<meta name="description" content="The terms for using the Automated Accessibility Enhancer: what it does and does not promise, what you may upload, and fair use.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="styles.css">
+<script>
+  document.documentElement.classList.add("js");
+  try {
+    var t = localStorage.getItem("theme");
+    if (t === "light" || t === "dark") { document.documentElement.dataset.theme = t; }
+  } catch (e) {}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="index.html">Accessibility Enhancer</a>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="index.html#updates">Updates</a></li>
+        <li><a href="index.html#how">How It Works</a></li>
+        <li><a href="progress.html">Progress</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false" hidden>
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+      Dark mode
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="intro wrap" aria-labelledby="top-h">
+    <h1 id="top-h">Terms of Service</h1>
+    <p class="lede">A free tool from a university project, offered as is. It will not make your deck legally
+      compliant on its own, a person still has to check the result, and there are a few things you shouldn't send
+      it.</p>
+    <p class="feed-meta">Last updated <time datetime="2026-11-20">Nov 20, 2026</time></p>
+  </section>
+
+  <section id="scope" class="wrap" aria-labelledby="scope-h">
+    <h2 id="scope-h">What this covers</h2>
+    <p>These terms apply to this website and the tool at <a href="/app">accessibilityenhancer.com/app</a>. Using the
+      tool means accepting them. How your files are handled is a separate question, answered in the
+      <a href="privacy.html">privacy policy</a>.</p>
+    <p>The project was built as part of the University of Washington Advancing Accessibility for Engineering
+      Education initiative, but <strong>it is not an official University of Washington service</strong>. It is a
+      student-led open-source project, run on a project-owned AWS account. UW does not operate it, support it, or
+      answer for it.</p>
+    <p>It costs nothing to use. There is no paid tier, no invoice and no contract behind it.</p>
+  </section>
+
+  <section id="as-is" class="wrap" aria-labelledby="as-is-h">
+    <h2 id="as-is-h">The tool is offered as is</h2>
+    <p><strong>A file the tool has fixed is not guaranteed to meet WCAG, Section 508, the ADA, or any other standard
+      or law.</strong> It is not an audit, a certification, or a substitute for one. It fixes a specific set of
+      common problems — reading order, missing alt text, missing language, small text — and it misses things outside
+      that set.</p>
+    <p>Every run produces a report saying what was changed and what still needs a person. <strong>Read it.</strong>
+      The alt text in particular is written by a language model from the picture and the words around it: it is a
+      first draft that is often right and sometimes wrong, and it needs someone who knows the material to check it
+      before the deck goes to students. You are responsible for what you hand out, not us.</p>
+    <p>There is no promise that the tool is available, that it will finish your file, or that it will not get
+      something wrong. It is a research project under active development, and parts of it change often. Keep your
+      original file.</p>
+  </section>
+
+  <section id="upload" class="wrap" aria-labelledby="upload-h">
+    <h2 id="upload-h">What you may upload</h2>
+    <ul class="plain">
+      <li><strong>Only material you have the right to share.</strong> If the deck isn't yours, make sure you are
+        allowed to send a copy of it to a third-party service before you do.</li>
+      <li><strong>No student records.</strong> Don't upload anything containing grades, student names attached to
+        work, disability or accommodation records, or anything else protected by FERPA. The tool is for course
+        material — lecture slides and handouts.</li>
+      <li><strong>Nothing else confidential.</strong> No personal data about other people, no health or financial
+        records, no unpublished research under embargo, nothing under NDA.</li>
+      <li><strong>Supported files only.</strong> PowerPoint files, and PDFs where the server you are using accepts
+        them. Each file must be under 50 MB, and everything sent at once under 250 MB.</li>
+    </ul>
+    <p>Your files stay yours. Uploading gives us no claim over your material, and no right to use it for anything
+      beyond running the pipeline you asked for.</p>
+  </section>
+
+  <section id="fair-use" class="wrap" aria-labelledby="fair-use-h">
+    <h2 id="fair-use-h">Fair use of the service</h2>
+    <p class="section-intro">The service runs on a small budget. These rules exist so it stays up for everyone.</p>
+    <ul class="plain">
+      <li>Don't script bulk uploads or otherwise drive it automatically. If you have a large batch to get through,
+        the tool also runs as a command-line script on your own machine — see
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer">the repository</a>.</li>
+      <li>Don't try to reach submissions that aren't yours, guess at identifiers, or work around the limits on who
+        can download what.</li>
+      <li>Don't probe, overload or attempt to break the service, and don't use it to process anything illegal.</li>
+      <li>Don't resell it or present it as your own service.</li>
+    </ul>
+    <p>Uploads may be rate-limited or blocked if any of this becomes a problem. Nothing here is meant to stop
+      ordinary use by a faculty member with a term's worth of lectures to fix.</p>
+  </section>
+
+  <section id="availability" class="wrap" aria-labelledby="availability-h">
+    <h2 id="availability-h">Availability and changes to the tool</h2>
+    <p>Features may change, and the hosted service may be paused or shut down, with or without notice. This is a
+      student project with a funding horizon, not a product with a support contract. If it does shut down, the code
+      stays public so the tool can still be run locally.</p>
+    <p>Your files are deleted on a timer in any case — uploads after 7 days, results after 30. The
+      <a href="privacy.html">privacy policy</a> has the detail.</p>
+  </section>
+
+  <section id="liability" class="wrap" aria-labelledby="liability-h">
+    <h2 id="liability-h">Liability</h2>
+    <p>To the extent the law allows: the project, its contributors and the University of Washington are not liable
+      for any loss or damage arising from your use of the tool. That includes a file the tool damaged or failed to
+      process, work lost because a file expired or the service was unavailable, alt text that turned out to be
+      wrong, and any consequence of relying on a fixed file being accessible or compliant when it was not.</p>
+    <p>This is a free tool given away by a university project. It comes with no warranty of any kind.</p>
+  </section>
+
+  <section id="changes" class="wrap" aria-labelledby="changes-h">
+    <h2 id="changes-h">Changes to these terms</h2>
+    <p>These terms can change. The date at the top changes with them, and every edit is in the
+      <a href="https://github.com/t-nair/automated-accessibility-enhancer-site/commits/main/terms.html">commit history
+      of this file</a>, so you can see exactly what was altered and when.</p>
+  </section>
+
+  <section id="questions" class="wrap" aria-labelledby="questions-h">
+    <h2 id="questions-h">Questions</h2>
+    <p>Write to <a href="mailto:hello@accessibilityenhancer.com">hello@accessibilityenhancer.com</a>. If something
+      here is unclear or seems unfair, say so — it is easier to fix a page than to argue about it later.</p>
+    <p class="feed-meta">Written for this project, following the shape of the
+      <a href="https://github.com/basecamp/policies">Basecamp open-source policies</a> /
+      <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. This page describes how the project
+      intends to operate; it is not legal advice.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Developed as part of the University of Washington Advancing Accessibility for Engineering Education initiative,
+      with guidance from Prof. Anant and Dr. Lalitha Subramanian.</p>
+    <ul class="links links-inline">
+      <li><a href="privacy.html">Privacy Policy</a></li>
+      <li><a href="terms.html" aria-current="page">Terms of Service</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script src="script.js" defer></script>
+</body>
+</html>
