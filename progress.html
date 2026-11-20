@@ -44,27 +44,41 @@
     <p class="lede">Where the project stands, what shipped recently, and what is still being decided. The source of
       truth is the <a href="https://github.com/t-nair/automated-accessibility-enhancer/milestones">milestones on
       GitHub</a>. This page is a summary of them.</p>
-    <p class="feed-meta">Last updated <time datetime="2026-10-29">Oct 29, 2026</time></p>
+    <p class="feed-meta">Last updated <time datetime="2026-11-19">Nov 19, 2026</time></p>
   </section>
 
   <section id="glance" class="wrap" aria-labelledby="glance-h">
     <h2 id="glance-h">At a Glance</h2>
     <ul class="plain">
-      <li><strong>PowerPoint is working end to end.</strong> Titles go first in the reading order, missing alt text is
-        written, missing language is detected, and small text is reported. Both the website and the folder script
-        work.</li>
-      <li><strong>PDFs are now accepted.</strong> They are routed page by page and rebuilt as tagged PDFs. Scanned
-        pages use OCR and always go to a person for review.</li>
-      <li><strong>Not deployed yet, and there is no login.</strong> Visitors are kept apart only by a signed browser
-        cookie. University sign-in is planned.</li>
-      <li><strong>The alt-text model is still undecided.</strong> The main branch runs a local model (about 4.4 GB). A
-        branch that switches to Claude on Amazon Bedrock is waiting for a decision.</li>
+      <li><strong>The tool is live.</strong> It runs at <a href="/app">accessibilityenhancer.com/app</a>, on AWS in
+        <span class="code">us-east-1</span>: the website on ECS, each uploaded deck processed by a Lambda, files in S3
+        and submissions in DynamoDB. Every merge to <span class="code">main</span> deploys from CI, once a reviewer
+        approves it.</li>
+      <li><strong>PowerPoint is working end to end.</strong> Reading order is fixed by role, missing image
+        descriptions are written, the presentation language is set, and table header rows are turned on. Slides with
+        no title, low contrast, text under 9 pt, vague link text and shapes read out of visual order are reported
+        rather than guessed at.</li>
+      <li><strong>Every file comes back with a scored report.</strong> It opens with a score out of 100 for the file
+        as it was uploaded, marks each problem critical, serious, moderate or minor with its WCAG 2.1 criterion, and
+        lists every change with the value before and after.</li>
+      <li><strong>Image descriptions come from Claude on Amazon Bedrock</strong> (Claude Haiku 4.5 by default), which
+        gets each picture along with up to 400 characters of the slide's own text as context. The local 4.4 GB model
+        is gone, and no GPU is needed
+        (<a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/97">#97</a>).</li>
+      <li><strong>PDFs work when you run the tool yourself, but not yet on the live site.</strong> The pipeline
+        rebuilds them as tagged PDFs, with OCR for scanned pages, and stops for a person whenever it is unsure. Only
+        the PowerPoint pipeline runs on AWS so far, so the hosted version turns PDFs away with a message.</li>
+      <li><strong>There is still no sign-in.</strong> The Cognito user pool, its sign-in pages and its email are in
+        the Terraform (<a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/140">#140</a>), but
+        the app does not use them yet, so visitors are still told apart by a signed browser cookie
+        (<a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/77">#77</a>).</li>
     </ul>
   </section>
 
   <section id="milestones" class="wrap" aria-labelledby="milestones-h">
     <h2 id="milestones-h">Milestones</h2>
-    <p class="section-intro">Issues closed out of the total in each milestone, ordered by target date.</p>
+    <p class="section-intro">Issues closed out of the total in each milestone, ordered by target date. These counts
+      were taken from GitHub on Nov 19, 2026.</p>
 
     <div class="table-wrap" role="region" aria-labelledby="milestones-h" tabindex="0">
       <table class="progress-table">
@@ -79,63 +93,63 @@
           </tr>
           <tr>
             <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/8">Slides: core checks</a></th>
-            <td><span class="bar" style="--done: 56%" aria-hidden="true"></span>5 of 9</td>
-            <td><time datetime="2026-10-27">Oct 27</time></td>
-          </tr>
-          <tr>
-            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/10">Reports and coverage docs</a></th>
-            <td><span class="bar" style="--done: 25%" aria-hidden="true"></span>1 of 4</td>
-            <td><time datetime="2026-10-28">Oct 28</time></td>
+            <td><span class="bar" style="--done: 100%" aria-hidden="true"></span>9 of 9 <span class="tag tag-done">Complete</span></td>
+            <td><time datetime="2026-10-31">Oct 31</time></td>
           </tr>
           <tr>
             <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/2">Documentation and accessibility audit</a></th>
-            <td><span class="bar" style="--done: 0%" aria-hidden="true"></span>0 of 2</td>
-            <td><time datetime="2026-10-29">Oct 29</time></td>
+            <td><span class="bar" style="--done: 100%" aria-hidden="true"></span>2 of 2 <span class="tag tag-done">Complete</span></td>
+            <td><time datetime="2026-11-01">Nov 1</time></td>
           </tr>
           <tr>
-            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/9">Slides: alt text and media</a></th>
-            <td><span class="bar" style="--done: 0%" aria-hidden="true"></span>0 of 9</td>
-            <td><time datetime="2026-10-30">Oct 30</time></td>
-          </tr>
-          <tr>
-            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/3">Accessibility conformance</a></th>
-            <td><span class="bar" style="--done: 0%" aria-hidden="true"></span>0 of 8</td>
+            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/10">Reports and coverage docs</a></th>
+            <td><span class="bar" style="--done: 75%" aria-hidden="true"></span>3 of 4</td>
             <td><time datetime="2026-11-02">Nov 2</time></td>
           </tr>
           <tr>
-            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/4">Observability and fault tolerance</a></th>
-            <td><span class="bar" style="--done: 0%" aria-hidden="true"></span>0 of 1</td>
-            <td><time datetime="2026-11-03">Nov 3</time></td>
-          </tr>
-          <tr>
-            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/6">Deployment and access control</a></th>
-            <td><span class="bar" style="--done: 0%" aria-hidden="true"></span>0 of 8</td>
+            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/9">Slides: alt text and media</a></th>
+            <td><span class="bar" style="--done: 22%" aria-hidden="true"></span>2 of 9</td>
             <td><time datetime="2026-11-04">Nov 4</time></td>
           </tr>
           <tr>
-            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/5">Orchestration and notifications</a></th>
-            <td><span class="bar" style="--done: 0%" aria-hidden="true"></span>0 of 2</td>
+            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/3">Accessibility conformance</a></th>
+            <td><span class="bar" style="--done: 13%" aria-hidden="true"></span>1 of 8</td>
             <td><time datetime="2026-11-05">Nov 5</time></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/4">Observability and fault tolerance</a></th>
+            <td><span class="bar" style="--done: 0%" aria-hidden="true"></span>0 of 2</td>
+            <td><time datetime="2026-11-06">Nov 6</time></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/5">Orchestration and notifications</a></th>
+            <td><span class="bar" style="--done: 33%" aria-hidden="true"></span>1 of 3</td>
+            <td><time datetime="2026-11-08">Nov 8</time></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/6">Deployment and access control</a></th>
+            <td><span class="bar" style="--done: 53%" aria-hidden="true"></span>8 of 15</td>
+            <td><time datetime="2026-11-08">Nov 8</time></td>
           </tr>
           <tr>
             <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/7">Submission dashboard and reporting</a></th>
             <td><span class="bar" style="--done: 0%" aria-hidden="true"></span>0 of 2</td>
-            <td><time datetime="2026-11-05">Nov 5</time></td>
-          </tr>
-          <tr>
-            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/11">Beyond slides: web pages and other formats</a></th>
-            <td><span class="bar" style="--done: 13%" aria-hidden="true"></span>2 of 16</td>
-            <td><time datetime="2026-11-06">Nov 6</time></td>
-          </tr>
-          <tr>
-            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/13">Script and code health</a></th>
-            <td><span class="bar" style="--done: 0%" aria-hidden="true"></span>0 of 9</td>
-            <td>No date</td>
+            <td><time datetime="2026-11-09">Nov 9</time></td>
           </tr>
           <tr>
             <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/12">Future fixes</a></th>
-            <td><span class="bar" style="--done: 0%" aria-hidden="true"></span>0 of 1</td>
-            <td>No date</td>
+            <td><span class="bar" style="--done: 25%" aria-hidden="true"></span>1 of 4</td>
+            <td><time datetime="2026-11-18">Nov 18</time></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/11">Beyond slides: web pages and other formats</a></th>
+            <td><span class="bar" style="--done: 24%" aria-hidden="true"></span>4 of 17</td>
+            <td><time datetime="2026-11-20">Nov 20</time></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://github.com/t-nair/automated-accessibility-enhancer/milestone/13">Script and code health</a></th>
+            <td><span class="bar" style="--done: 33%" aria-hidden="true"></span>3 of 9</td>
+            <td><time datetime="2026-11-21">Nov 21</time></td>
           </tr>
         </tbody>
       </table>
@@ -145,44 +159,99 @@
   <section id="shipped" class="wrap" aria-labelledby="shipped-h">
     <h2 id="shipped-h">Recently Shipped</h2>
     <ul class="plain">
-      <li><strong>PDF remediation</strong> (<time datetime="2026-10-26">Oct 26</time>). Uploaded PDFs go through a
+      <li><strong>Sign-in infrastructure</strong> (<time datetime="2026-11-19">Nov 19</time>). A Cognito user pool
+        with hosted sign-in pages, email and password, Google when it is configured, and verification email through
+        SES. The app's half of sign-in is the part still to come.
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/140">#140</a></li>
+      <li><strong>Backups and retention</strong> (<time datetime="2026-11-19">Nov 19</time>). Both S3 buckets are
+        versioned, so a file that is deleted or overwritten can be restored for 3 days, and the submissions table can
+        be restored to any second in the last 35 days. Uploads expire after 7 days and results after 30: a deck is a
+        working file, not a record.
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/138">#138</a></li>
+      <li><strong>Live on AWS</strong> (<time datetime="2026-11-19">Nov 19</time>). The website moved to ECS Express
+        Mode, which brings its own load balancer and certificate, and CI now builds both container images and applies
+        the Terraform on every merge to <span class="code">main</span>. Each deployed version is a named commit, so a
+        rollback is re-running an older deploy.
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/131">#131</a>,
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/132">#132</a></li>
+      <li><strong>A clearer upload and report</strong> (<time datetime="2026-11-19">Nov 19</time>). Files can be added
+        to the upload list a few at a time and removed one by one, and the report is now a page with a summary and a
+        slide-by-slide view, as well as a text file to download.
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/130">#130</a></li>
+      <li><strong>Alt text from Claude on Amazon Bedrock</strong> (<time datetime="2026-11-05">Nov 5</time>). The AWS
+        work came onto <span class="code">main</span>: descriptions are written by a hosted model, and the local
+        vision model, <span class="code">torch</span> and <span class="code">transformers</span> were removed with it.
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/125">#125</a></li>
+      <li><strong>The web app audits itself in CI</strong> (<time datetime="2026-11-01">Nov 1</time>). Every page and
+        state is loaded in headless Chromium and checked with axe-core on every pull request. There are no WCAG 2.1
+        Level A or AA violations.
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/108">#108</a>,
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/123">#123</a></li>
+      <li><strong>Reading order by role, and before and after in the report</strong>
+        (<time datetime="2026-10-31">Oct 31</time>). Shapes are ordered title, then subtitle, then the content in the
+        author's own order, then date, footer and slide number. A shape that sits above another but is read after it
+        is reported. Every change is listed with the value before and after.
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/119">#119</a>,
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/122">#122</a></li>
+      <li><strong>Table header rows, contrast, small text and link text</strong>
+        (<time datetime="2026-10-29">Oct 29</time> to <time datetime="2026-10-31">Oct 31</time>). A table whose first
+        row reads as headings gets the header row option turned on. Text below 4.5:1, text under 9 pt, and link text
+        that does not say where the link goes are reported, each with a severity and a WCAG criterion.
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/115">#115</a>,
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/106">#106</a>,
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/109">#109</a>,
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/105">#105</a></li>
+      <li><strong>Uploads survive a restart</strong> (<time datetime="2026-10-29">Oct 29</time>). The original file is
+        never moved, so a retry or a restart picks the file up again from it instead of leaving it stuck as
+        processing. Every form also carries a CSRF token now.
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/99">#99</a>,
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/96">#96</a></li>
+      <li><strong>PDF remediation</strong> (<time datetime="2026-10-26">Oct 26</time>). PDFs go through a
         page-by-page pipeline and come back as tagged PDFs, with OCR for scanned pages and human review for anything
         uncertain. <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/84">#84</a>,
         <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/92">#92</a></li>
-      <li><strong>Presentation language</strong> (<time datetime="2026-10-11">Oct 11</time>). Missing, invalid or
-        mixed language settings are reported, and can be set across the whole deck.
-        <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/24">#24</a></li>
-      <li><strong>Minimum font size</strong> (<time datetime="2026-10-11">Oct 11</time>). Text below 9 pt is
-        reported by slide, including sizes inherited from layouts and masters.
-        <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/26">#26</a></li>
-      <li><strong>Title detection by layout</strong> (<time datetime="2026-10-10">Oct 10</time>). When a slide has no
-        real title placeholder, a small trained model picks the likely title from size, position and wording.
-        <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/7">#7</a>,
-        <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/23">#23</a></li>
-      <li><strong>Documentation</strong> (<time datetime="2026-10-10">Oct 10</time>). A WCAG 2.1 coverage table, notes
-        on exporting fixed decks to PDF, and a decision on Prezi (export to PowerPoint first).
-        <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/50">#50</a>,
-        <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/37">#37</a></li>
     </ul>
+    <p>The test suite is past 270 tests, covering both pipelines, every page and route of the web app, and the AWS
+      storage layer against stand-ins for Bedrock, S3 and DynamoDB, so it still runs in seconds without AWS
+      credentials.</p>
   </section>
 
   <section id="decisions" class="wrap" aria-labelledby="decisions-h">
     <h2 id="decisions-h">Open Decisions</h2>
     <ul class="plain">
-      <li><strong>Local model or hosted API for alt text.</strong> A local model needs a GPU machine and about 4.4 GB
-        of files. A hosted API runs on a lighter server but costs money per image.
+      <li><strong>Which ways to sign in.</strong> Email and password and Google are built. Cognito checks a token
+        against one exact issuer, and Microsoft's multi-tenant endpoints put each tenant's own id in the issuer, so
+        one Microsoft provider can only serve one tenant: UW's, or personal accounts. UW NetID comes later.
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/77">#77</a></li>
+      <li><strong>How to check problems that only show once a page is rendered</strong>, such as CSS contrast,
+        keyboard access and focus order. Most of the WCAG criteria still uncovered need this.
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/47">#47</a></li>
+      <li><strong>How long to keep files, and where people are told.</strong> Uploads go after 7 days and results
+        after 30, which may not be the right period.
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/78">#78</a></li>
+      <li><strong>Whether to process more than one file at a time.</strong> It needs a shared queue and shared
+        progress outside the process, so for now one server works through one file at a time.
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/104">#104</a></li>
+      <li><strong>How the tool compares with existing checkers</strong> on real decks, which has not been measured
+        yet. <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/98">#98</a></li>
+    </ul>
+
+    <h3>Settled since the last update</h3>
+    <ul class="plain">
+      <li><strong>Alt text comes from a hosted model.</strong> Claude on Amazon Bedrock, not a model running locally.
+        The 4.4 GB download and the need for a GPU went with it.
         <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/97">#97</a></li>
-      <li><strong>Whether n8n should orchestrate the pipeline</strong>, which affects how notifications and storage
-        are built. <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/80">#80</a></li>
-      <li><strong>How to check web pages for problems that only show once rendered</strong>, such as CSS contrast and
-        keyboard access. <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/47">#47</a></li>
+      <li><strong>No workflow engine, for now.</strong> Putting a deck in S3 is what starts a Lambda, status and
+        progress are in DynamoDB, and failures raise CloudWatch alarms, so there is no queue left for n8n to take
+        over. <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/80">#80</a></li>
     </ul>
   </section>
 
   <section id="results" class="wrap" aria-labelledby="results-h">
     <h2 id="results-h">Early Results</h2>
     <p class="section-intro">Faculty PowerPoint files that Anthology Ally flagged for missing headings were run through
-      the tool and put back into their Canvas courses. A full comparison with other checkers is tracked in
+      the tool and put back into their Canvas courses. These runs came before the tool scored files itself, and a
+      full comparison with other checkers is still to be done; it is tracked in
       <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/98">#98</a>.</p>
 
     <div class="table-wrap" role="region" aria-labelledby="results-h" tabindex="0">
@@ -199,8 +268,8 @@
         </tbody>
       </table>
     </div>
-    <p>Every score went up. The issues left on the SEO lesson are all color contrast, which the tool reports but does
-      not fix yet.</p>
+    <p>Every score went up. The issues left on the SEO lesson are all text contrast, which the tool now reports with
+      each ratio but does not fix, because a new colour is a design decision.</p>
   </section>
 
 </main>
