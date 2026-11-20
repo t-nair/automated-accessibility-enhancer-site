@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Automated Accessibility Enhancer</title>
-<meta name="description" content="An open-source tool that fixes reading order and adds missing alt text in PowerPoint files. Built at the University of Washington.">
+<meta name="description" content="An open-source tool that fixes reading order and adds missing alt text in PowerPoint and PDF files, and reports what a person still needs to look at. Built at the University of Washington.">
 <meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="styles.css">
 <script>
@@ -43,8 +43,9 @@
   <section class="intro wrap" id="top" aria-labelledby="top-h">
     <h1 id="top-h">Automated Accessibility Enhancer</h1>
     <p class="lede">An open-source tool that fixes common accessibility problems in PowerPoint files. It puts slide
-      titles first in the reading order, adds alt text to images that don't have any, and creates a report of every
-      change.</p>
+      titles first in the reading order, adds alt text to images that don't have any, sets the presentation language,
+      and gives back a report that scores the file and lists everything a person still needs to look at. PDFs are
+      rebuilt as tagged PDFs when you run the tool on your own machine.</p>
     <p class="actions">
       <a class="button" href="/app">Try the tool</a>
       <a class="button-secondary" href="https://github.com/t-nair/automated-accessibility-enhancer">View on GitHub</a>
@@ -56,37 +57,90 @@
 
     <ol class="feed" id="feed">
 
-      <li class="feed-item is-upcoming">
+      <li class="feed-item">
         <p class="feed-meta">
-          <span class="tag tag-upcoming">Upcoming</span>
-          <time datetime="2026-09-29">Sep 29 to Oct 2, 2026</time>
+          <span class="tag">Infrastructure</span>
+          <time datetime="2026-11-19">Nov 19, 2026</time>
         </p>
-        <h3>Attending EDUCAUSE 2026 in Denver</h3>
-        <p>I'll be at the conference in person as an
-          <a href="https://er.educause.edu/articles/2023/1/pipeline-to-educause-connecting-underrepresented-students-to-careers-in-higher-education-it">EDUCAUSE
-          Pipeline scholar</a>. If you'd like to meet up and talk about accessible course materials,
-          <a href="mailto:tanyan07@uw.edu?subject=EDUCAUSE%202026">send me an email</a>.</p>
+        <h3>The tool is live on AWS</h3>
+        <p>"Try the tool" now reaches a real deployment instead of a laptop: the website runs on ECS, each uploaded
+          deck is processed by a Lambda, files are kept in S3 and submissions in DynamoDB. Every merge to
+          <span class="code">main</span> deploys from CI once a reviewer approves it.
+          <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/131">#131</a></p>
       </li>
 
       <li class="feed-item">
         <p class="feed-meta">
-          <span class="tag">On a branch</span>
-          <time datetime="2026-09-03">Sep 3, 2026</time>
+          <span class="tag">Infrastructure</span>
+          <time datetime="2026-11-19">Nov 19, 2026</time>
         </p>
-        <h3>Trying alt text from Claude on Amazon Bedrock</h3>
-        <p>A hosted model would describe images instead of one running locally, so no GPU would be needed. This is on
-          the <span class="code">aws-deployment</span> branch and not merged yet. Whether to switch is tracked in
+        <h3>Backups, expiry, and the groundwork for sign-in</h3>
+        <p>Uploads are deleted after 7 days and results after 30, both buckets keep a deleted or overwritten file for
+          3 more days, and the submissions table can be restored to any second in the last 35 days. A Cognito user
+          pool is now in the Terraform too, though the app does not use it yet.
+          <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/138">#138</a>,
+          <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/140">#140</a></p>
+      </li>
+
+      <li class="feed-item">
+        <p class="feed-meta">
+          <span class="tag">Release</span>
+          <time datetime="2026-11-05">Nov 5, 2026</time>
+        </p>
+        <h3>Alt text now comes from Claude on Amazon Bedrock</h3>
+        <p>Images are described by a hosted model, which is sent the picture and a little of the surrounding slide
+          text. The 4.4 GB local model and its dependencies were removed, so the tool no longer needs a GPU, and the
+          decision is recorded in
           <a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/97">#97</a>.</p>
       </li>
 
       <li class="feed-item">
         <p class="feed-meta">
-          <span class="tag">On a branch</span>
-          <time datetime="2026-09-03">Sep 3, 2026</time>
+          <span class="tag">Infrastructure</span>
+          <time datetime="2026-11-01">Nov 1, 2026</time>
         </p>
-        <h3>Trying an AWS deployment with Terraform</h3>
-        <p>On the same branch, the pipeline runs on AWS Lambda: upload a deck to S3 and the fixed file and report are
-          written back to S3. It is not merged yet, and the web app still runs locally.</p>
+        <h3>The web app is audited with axe-core in CI</h3>
+        <p>Every page and state of the app is loaded in a headless browser and checked on every pull request. It has
+          no WCAG 2.1 Level A or AA violations.
+          <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/123">#123</a></p>
+      </li>
+
+      <li class="feed-item">
+        <p class="feed-meta">
+          <span class="tag">Release</span>
+          <time datetime="2026-10-31">Oct 31, 2026</time>
+        </p>
+        <h3>Scored reports and five more checks</h3>
+        <p>Each report opens with a score out of 100 for the file as uploaded, marks every problem critical, serious,
+          moderate or minor with its WCAG criterion, and lists each change before and after. Slide reading order is
+          now set by role, table header rows are turned on, and contrast, text under 9 pt and vague link text are
+          reported. <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/105">#105</a>,
+          <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/119">#119</a>,
+          <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/122">#122</a></p>
+      </li>
+
+      <li class="feed-item">
+        <p class="feed-meta">
+          <span class="tag">Release</span>
+          <time datetime="2026-10-26">Oct 26, 2026</time>
+        </p>
+        <h3>PDF remediation</h3>
+        <p>PDFs are inspected page by page and rebuilt as tagged PDFs with a title and a language. Scanned pages are
+          read with OCR and always marked for a person to check. This runs when you use the tool on your own machine;
+          the hosted site still takes PowerPoint only.
+          <a href="https://github.com/t-nair/automated-accessibility-enhancer/pull/84">#84</a></p>
+      </li>
+
+      <li class="feed-item">
+        <p class="feed-meta">
+          <span class="tag">Talk</span>
+          <time datetime="2026-09-29">Sep 29 to Oct 2, 2026</time>
+        </p>
+        <h3>Attended EDUCAUSE 2026 in Denver</h3>
+        <p>I was at the conference in person as an
+          <a href="https://er.educause.edu/articles/2023/1/pipeline-to-educause-connecting-underrepresented-students-to-careers-in-higher-education-it">EDUCAUSE
+          Pipeline scholar</a>. If you'd like to talk about accessible course materials,
+          <a href="mailto:tanyan07@uw.edu?subject=Accessibility%20Enhancer">send me an email</a>.</p>
       </li>
 
       <li class="feed-item">
@@ -96,7 +150,7 @@
         </p>
         <h3>Reading order and alt text bug fixes</h3>
         <p>Fixed four bugs, including one where alt text written by a person could be overwritten if it matched the
-          shape name. The test suite is now at 123 tests.</p>
+          shape name.</p>
       </li>
 
       <li class="feed-item">
@@ -129,7 +183,8 @@
   <section id="how" class="wrap" aria-labelledby="how-h">
     <h2 id="how-h">How It Works</h2>
     <p class="section-intro">The tool is written in Python and uses <span class="code">python-pptx</span> to edit
-      files directly. Files can come in three ways, and all of them go through the same pipeline.</p>
+      files directly. Files can come in three ways, and all of them go through the same pipeline. On the live site
+      nothing is processed by the website itself: an upload goes to S3, which starts the pipeline on AWS Lambda.</p>
 
     <div class="pipeline">
 
@@ -146,7 +201,7 @@
           </li>
           <li>
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 19h10a4 4 0 0 0 .6-7.95A6 6 0 0 0 6 10.2 4.5 4.5 0 0 0 7 19z"/></svg>
-            <span><strong>S3 bucket</strong><small>AWS Lambda, not merged yet</small></span>
+            <span><strong>S3 bucket</strong><small>Starts the pipeline on AWS Lambda</small></span>
           </li>
         </ul>
       </div>
@@ -162,11 +217,15 @@
           </li>
           <li>
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10 6h10M10 12h10M10 18h10M4.5 4.5 6 4v4M4 12.5a1 1 0 1 1 2 .3L4 15h2M4 17h2l-1 1.2a1 1 0 1 1-1 .8"/></svg>
-            <span><strong>Fix reading order</strong><small>Shapes named "Title" are moved to the front</small></span>
+            <span><strong>Fix reading order</strong><small>Title first, then subtitle, then the content in the author's order, then date, footer and slide number</small></span>
           </li>
           <li>
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4.5" width="18" height="15" rx="1.5"/><circle cx="9" cy="10" r="1.75"/><path d="m3.5 17.5 5-5 3.5 3.5 2.5-2.5 6 5"/></svg>
-            <span><strong>Add alt text</strong><small>Images without alt text are described by a vision model running locally</small></span>
+            <span><strong>Add alt text</strong><small>Images without alt text are described by Claude on Amazon Bedrock, using the slide's text as context</small></span>
+          </li>
+          <li>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 6.5 5.5 8l2.5-3M4 12.5 5.5 14l2.5-3M4 18.5 5.5 20l2.5-3M12 7h8M12 13h8M12 19h8"/></svg>
+            <span><strong>Check the rest</strong><small>Language, missing titles, contrast, font size, link text and table headers</small></span>
           </li>
         </ol>
       </div>
@@ -178,11 +237,11 @@
         <ul class="nodes">
           <li>
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 3h8l4 4v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM14 3v4h4M8.5 14l2 2 4-4"/></svg>
-            <span><strong>Fixed .pptx</strong><small>Ready to download</small></span>
+            <span><strong>Fixed file</strong><small>A .pptx, or a tagged PDF, ready to download</small></span>
           </li>
           <li>
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
-            <span><strong>Report</strong><small>Every change, slide by slide</small></span>
+            <span><strong>Scored report</strong><small>A score out of 100, every change before and after, and each problem by severity</small></span>
           </li>
         </ul>
       </div>
@@ -237,21 +296,36 @@
         diagrams wrong. The report lists every description so they can be checked.</li>
       <li><strong>Technical diagrams are hard to describe.</strong> Earlier tests with free tools like alternat did
         not produce usable alt text for engineering figures.</li>
-      <li><strong>The alt-text model is large.</strong> It is about 4.4 GB and slow without a GPU. A hosted model is
-        being considered (<a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/97">#97</a>).</li>
-      <li><strong>There are no user accounts.</strong> Files are kept separate with a signed browser cookie, which is
-        not real security.</li>
-      <li><strong>Files are processed one at a time</strong>, and progress is stored in memory. If the server restarts
-        during a run, that file stays marked as processing.</li>
+      <li><strong>Some problems are reported, not fixed.</strong> A missing title, a colour with too little contrast,
+        a font size and the wording of a link are design decisions, so the report names each one and leaves it to a
+        person.</li>
+      <li><strong>PDFs only work when you run the tool yourself.</strong> On the live site PDF uploads are turned
+        away with a message, because only the PowerPoint pipeline runs on AWS so far.</li>
+      <li><strong>There are no user accounts yet.</strong> Files are kept separate with a signed browser cookie,
+        which is not real security. The Cognito user pool is built, but the app does not use it yet
+        (<a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/77">#77</a>).</li>
+      <li><strong>Files are processed one at a time.</strong> A restart is safe now, because the original upload is
+        never moved and unfinished files are queued again, but running several at once needs a shared queue
+        (<a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/104">#104</a>).</li>
+      <li><strong>Each file can be up to 50 MB</strong>, and one upload is limited to about 100 MB on the live site
+        because of the proxy in front of it.</li>
+      <li><strong>Web pages are not supported.</strong> Only PowerPoint and PDF are checked today; HTML is planned
+        (<a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/41">#41</a>).</li>
     </ul>
   </section>
 
   <section id="next" class="wrap" aria-labelledby="next-h">
     <h2 id="next-h">What's Next</h2>
     <ul class="plain">
-      <li>University sign-in</li>
-      <li>Configurable rules for headings and slide structure</li>
-      <li>Moving the web app to AWS</li>
+      <li>Sign-in, so a file list survives clearing cookies
+        (<a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/77">#77</a>)</li>
+      <li>PDFs on the live site, not just on your own machine</li>
+      <li>Checks that need a rendered page, such as keyboard access and focus order
+        (<a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/47">#47</a>)</li>
+      <li>Web pages and other formats
+        (<a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/41">#41</a>)</li>
+      <li>A measured comparison with the accessibility checkers people already use
+        (<a href="https://github.com/t-nair/automated-accessibility-enhancer/issues/98">#98</a>)</li>
     </ul>
     <p>See <a href="progress.html">Project Progress</a> for milestones and open decisions. Feedback on the design or
       code is welcome.</p>
@@ -267,6 +341,10 @@
       <li>
         <a href="https://github.com/t-nair/automated-accessibility-enhancer">Project repository</a>
         <span class="meta">Source code and setup instructions</span>
+      </li>
+      <li>
+        <a href="https://github.com/t-nair/automated-accessibility-enhancer/blob/main/docs/what-it-checks.md">What it checks and fixes</a>
+        <span class="meta">Every check, with an example report, and the full WCAG 2.1 coverage table</span>
       </li>
       <li>
         <a href="https://er.educause.edu/articles/2023/1/pipeline-to-educause-connecting-underrepresented-students-to-careers-in-higher-education-it">Pipeline to EDUCAUSE</a>
